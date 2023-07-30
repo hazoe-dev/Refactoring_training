@@ -3,8 +3,10 @@ package pl.refactoring.interpreter.legacy;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import pl.refactoring.interpreter.legacy.field.EstateMaterial;
+import pl.refactoring.interpreter.legacy.field.EstatePlacement;
+import pl.refactoring.interpreter.legacy.field.EstateType;
+import pl.refactoring.interpreter.legacy.criteria.BelowAreaSpec;
 
 class BelowAreaSpecTest {
 

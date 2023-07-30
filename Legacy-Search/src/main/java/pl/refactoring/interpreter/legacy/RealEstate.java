@@ -1,5 +1,9 @@
 package pl.refactoring.interpreter.legacy;
 
+import pl.refactoring.interpreter.legacy.field.EstateMaterial;
+import pl.refactoring.interpreter.legacy.field.EstatePlacement;
+import pl.refactoring.interpreter.legacy.field.EstateType;
+
 /**
  * Copyright (c) 2020 IT Train Wlodzimierz Krakowski (www.refactoring.pl)
  * Sources are available only for personal usage by Udemy students of this course.

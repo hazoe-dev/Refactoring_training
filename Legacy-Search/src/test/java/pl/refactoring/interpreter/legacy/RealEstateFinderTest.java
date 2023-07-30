@@ -8,6 +8,9 @@ package pl.refactoring.interpreter.legacy;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import pl.refactoring.interpreter.legacy.field.EstateMaterial;
+import pl.refactoring.interpreter.legacy.field.EstatePlacement;
+import pl.refactoring.interpreter.legacy.field.EstateType;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,5 +1,12 @@
 package pl.refactoring.interpreter.legacy;
 
+import pl.refactoring.interpreter.legacy.field.EstateMaterial;
+import pl.refactoring.interpreter.legacy.field.EstatePlacement;
+import pl.refactoring.interpreter.legacy.field.EstateType;
+import pl.refactoring.interpreter.legacy.criteria.BelowAreaSpec;
+import pl.refactoring.interpreter.legacy.criteria.MaterialSpec;
+import pl.refactoring.interpreter.legacy.criteria.Spec;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -37,10 +44,8 @@ public class RealEstateFinder {
         BelowAreaSpec belowAreaSpec = new BelowAreaSpec(maxBuildingArea);
         MaterialSpec materialSpec = new MaterialSpec(material);
         List<RealEstate> foundRealEstates = new ArrayList<>();
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
-            if (materialSpec.check( estate) && belowAreaSpec.check(estate))
+        for (RealEstate estate : repository) {
+            if (materialSpec.check(estate) && belowAreaSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -49,9 +54,7 @@ public class RealEstateFinder {
     public List<RealEstate> byPlacement(EstatePlacement placement){
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
+        for (RealEstate estate : repository) {
             if (estate.getPlacement().equals(placement))
                 foundRealEstates.add(estate);
         }
@@ -61,10 +64,8 @@ public class RealEstateFinder {
     public List<RealEstate> byAvoidingPlacement(EstatePlacement placement){
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
-            if (! estate.getPlacement().equals(placement))
+        for (RealEstate estate : repository) {
+            if (!estate.getPlacement().equals(placement))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -73,9 +74,7 @@ public class RealEstateFinder {
     public List<RealEstate> byAreaRange(float minArea, float maxArea){
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
+        for (RealEstate estate : repository) {
             if (estate.getBuildingArea() >= minArea && estate.getBuildingArea() <= maxArea)
                 foundRealEstates.add(estate);
         }
@@ -85,9 +84,7 @@ public class RealEstateFinder {
     public List<RealEstate> byType(EstateType type){
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
+        for (RealEstate estate : repository) {
             if (estate.getType().equals(type))
                 foundRealEstates.add(estate);
         }
@@ -97,9 +94,7 @@ public class RealEstateFinder {
     public List<RealEstate> byVerySpecificCriteria(EstateType type, EstatePlacement placement, EstateMaterial material){
         List<RealEstate> foundRealEstates = new ArrayList<>();
         MaterialSpec materialSpec = new MaterialSpec(material);
-        Iterator<RealEstate> estates = repository.iterator();
-        while (estates.hasNext()) {
-            RealEstate estate = estates.next();
+        for (RealEstate estate : repository) {
             if (estate.getType().equals(type) && estate.getPlacement().equals(placement) && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
