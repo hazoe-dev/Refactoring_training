@@ -1,5 +1,6 @@
 package pl.refactoring.interpreter.legacy;
 
+import pl.refactoring.interpreter.legacy.criteria.PlacementSpec;
 import pl.refactoring.interpreter.legacy.field.EstateMaterial;
 import pl.refactoring.interpreter.legacy.field.EstatePlacement;
 import pl.refactoring.interpreter.legacy.field.EstateType;
@@ -55,7 +56,8 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (checkPlacement(placement, estate))
+            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
+            if (placementSpec.check())
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -65,7 +67,8 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (!checkPlacement(placement, estate))
+            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
+            if (!placementSpec.check())
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -94,16 +97,16 @@ public class RealEstateFinder {
     public List<RealEstate> byVerySpecificCriteria(EstateType type, EstatePlacement placement, EstateMaterial material){
         List<RealEstate> foundRealEstates = new ArrayList<>();
         MaterialSpec materialSpec = new MaterialSpec(material);
+
         for (RealEstate estate : repository) {
-            if (checkEstateType(type, estate) && checkPlacement(placement, estate) && materialSpec.check(estate))
+            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
+            if (checkEstateType(type, estate) && placementSpec.check() && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
     }
 
-    private boolean checkPlacement(EstatePlacement placement, RealEstate estate) {
-        return estate.getPlacement().equals(placement);
-    }
+
 
     private boolean checkEstateType(EstateType type, RealEstate estate) {
         return estate.getType().equals(type);
