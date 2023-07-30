@@ -55,7 +55,7 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (estate.getPlacement().equals(placement))
+            if (checkPlacement(placement, estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -65,7 +65,7 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (!estate.getPlacement().equals(placement))
+            if (!checkPlacement(placement, estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -85,7 +85,7 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (estate.getType().equals(type))
+            if (checkEstateType(type, estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -95,9 +95,17 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
         MaterialSpec materialSpec = new MaterialSpec(material);
         for (RealEstate estate : repository) {
-            if (estate.getType().equals(type) && estate.getPlacement().equals(placement) && materialSpec.check(estate))
+            if (checkEstateType(type, estate) && checkPlacement(placement, estate) && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
+    }
+
+    private boolean checkPlacement(EstatePlacement placement, RealEstate estate) {
+        return estate.getPlacement().equals(placement);
+    }
+
+    private boolean checkEstateType(EstateType type, RealEstate estate) {
+        return estate.getType().equals(type);
     }
 }
