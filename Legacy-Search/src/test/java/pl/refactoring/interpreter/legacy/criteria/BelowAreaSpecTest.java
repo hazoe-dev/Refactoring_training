@@ -1,8 +1,9 @@
-package pl.refactoring.interpreter.legacy;
+package pl.refactoring.interpreter.legacy.criteria;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.refactoring.interpreter.legacy.RealEstate;
 import pl.refactoring.interpreter.legacy.field.EstateMaterial;
 import pl.refactoring.interpreter.legacy.field.EstatePlacement;
 import pl.refactoring.interpreter.legacy.field.EstateType;
