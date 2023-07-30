@@ -50,10 +50,9 @@ public class RealEstateFinder {
 
     public List<RealEstate> byPlacement(EstatePlacement placement){
         List<RealEstate> foundRealEstates = new ArrayList<>();
-
+        PlacementSpec placementSpec = new PlacementSpec(placement);
         for (RealEstate estate : repository) {
-            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
-            if (placementSpec.check())
+            if (placementSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -61,10 +60,9 @@ public class RealEstateFinder {
 
     public List<RealEstate> byAvoidingPlacement(EstatePlacement placement){
         List<RealEstate> foundRealEstates = new ArrayList<>();
-
+        PlacementSpec placementSpec = new PlacementSpec(placement);
         for (RealEstate estate : repository) {
-            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
-            if (!placementSpec.check())
+            if (!placementSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -82,10 +80,9 @@ public class RealEstateFinder {
 
     public List<RealEstate> byType(EstateType type){
         List<RealEstate> foundRealEstates = new ArrayList<>();
-
+        EstateTypeSpec typeSpec = new EstateTypeSpec(type);
         for (RealEstate estate : repository) {
-            EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
-            if (typeSpec.check())
+            if (typeSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -94,11 +91,11 @@ public class RealEstateFinder {
     public List<RealEstate> byVerySpecificCriteria(EstateType type, EstatePlacement placement, EstateMaterial material){
         List<RealEstate> foundRealEstates = new ArrayList<>();
         MaterialSpec materialSpec = new MaterialSpec(material);
+        PlacementSpec placementSpec = new PlacementSpec(placement);
+        EstateTypeSpec typeSpec = new EstateTypeSpec(type);
 
         for (RealEstate estate : repository) {
-            PlacementSpec placementSpec = new PlacementSpec(placement, estate);
-            EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
-            if (typeSpec.check() && placementSpec.check() && materialSpec.check(estate))
+            if (typeSpec.check(estate) && placementSpec.check(estate) && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;

@@ -7,12 +7,12 @@ public class PlacementSpec {
     private EstatePlacement placement;
     private RealEstate estate;
 
-    public PlacementSpec(EstatePlacement placement, RealEstate estate) {
+    public PlacementSpec(EstatePlacement placement) {
         this.placement = placement;
         this.estate = estate;
     }
 
-    public boolean check() {
-        return estate.getPlacement().equals(placement);
+    public boolean check(RealEstate estate) {
+        return this.estate.getPlacement().equals(placement);
     }
 }
