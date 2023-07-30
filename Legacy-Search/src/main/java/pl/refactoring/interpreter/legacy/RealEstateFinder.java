@@ -6,7 +6,6 @@ import pl.refactoring.interpreter.legacy.field.EstatePlacement;
 import pl.refactoring.interpreter.legacy.field.EstateType;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -86,7 +85,7 @@ public class RealEstateFinder {
 
         for (RealEstate estate : repository) {
             EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
-            if (typeSpec.checkEstateType())
+            if (typeSpec.check())
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -99,7 +98,7 @@ public class RealEstateFinder {
         for (RealEstate estate : repository) {
             PlacementSpec placementSpec = new PlacementSpec(placement, estate);
             EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
-            if (typeSpec.checkEstateType() && placementSpec.check() && materialSpec.check(estate))
+            if (typeSpec.check() && placementSpec.check() && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;

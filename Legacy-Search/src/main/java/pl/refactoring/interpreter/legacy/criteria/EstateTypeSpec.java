@@ -12,7 +12,7 @@ public class EstateTypeSpec {
         this.estate = estate;
     }
 
-    public boolean checkEstateType() {
+    public boolean check() {
         return estate.getType().equals(type);
     }
 }
