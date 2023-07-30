@@ -19,9 +19,9 @@ class PlacementSpecTest {
                 EstateType.BUNGALLOW, EstateMaterial.WOOD);
     }
     @Test
-    void check_whenEstateIsVillageAndPlacementIsVillage_returnTrue() {
+    void check_equalWhenEstateIsVillageAndPlacementIsVillage_returnTrue() {
         //arrange
-        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.VILLAGE);
+        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.VILLAGE, true);
         //act
         boolean isVillagePlacement = placementSpec.check(estate);
         //assert
@@ -29,12 +29,32 @@ class PlacementSpecTest {
     }
 
     @Test
-    void check_whenEstateIsVillageAndPlacementIsTown_returnFalse() {
+    void check_equalWhenEstateIsVillageAndPlacementIsTown_returnFalse() {
         //arrange
-        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.TOWN);
+        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.TOWN,true);
         //act
         boolean isTownPlacement = placementSpec.check(estate);
         //assert
         Assertions.assertEquals(false, isTownPlacement);
+    }
+
+    @Test
+    void check_notEqualWhenEstateIsVillageAndPlacementIsVillage_returnFalse() {
+        //arrange
+        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.VILLAGE, false);
+        //act
+        boolean isVillagePlacement = placementSpec.check(estate);
+        //assert
+        Assertions.assertEquals(false, isVillagePlacement);
+    }
+
+    @Test
+    void check_notEqualWhenEstateIsVillageAndPlacementIsTown_returnTrue() {
+        //arrange
+        PlacementSpec placementSpec = new PlacementSpec(EstatePlacement.TOWN,false);
+        //act
+        boolean isTownPlacement = placementSpec.check(estate);
+        //assert
+        Assertions.assertEquals(true, isTownPlacement);
     }
 }

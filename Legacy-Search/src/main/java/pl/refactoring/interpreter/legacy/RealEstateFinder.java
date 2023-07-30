@@ -77,9 +77,9 @@ public class RealEstateFinder {
     }
 
     public List<RealEstate> byVerySpecificCriteria(EstateType type, EstatePlacement placement, EstateMaterial material){
-        List<RealEstate> foundRealEstates = new ArrayList<>();
+        List<RealEstate> foundRealEstates;
         Spec materialSpec = new MaterialSpec(material);
-        Spec placementSpec = new PlacementSpec(placement);
+        Spec placementSpec = new PlacementSpec(placement, true);
         Spec typeSpec = new EstateTypeSpec(type);
 
         foundRealEstates = bySpec(materialSpec);
