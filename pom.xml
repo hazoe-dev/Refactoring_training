@@ -17,11 +17,7 @@
     </properties>
 
     <modules>
-        <module>1-Legacy-Search</module>
-        <module>2-Pyramid-Basement</module>
-        <module>3-Emerging-Interpreter</module>
-        <module>4-Completed-Interpreter</module>
-        <module>5-Interpreter-Factories</module>
+        <module>Legacy-Search</module>
     </modules>
 
     <build>

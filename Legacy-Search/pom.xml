@@ -9,7 +9,7 @@
         <artifactId>pyramidofrefactoring</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>1-Legacy-Search</artifactId>
+    <artifactId>Legacy-Search</artifactId>
     <packaging>jar</packaging>
 
     <name>Legacy Search</name>

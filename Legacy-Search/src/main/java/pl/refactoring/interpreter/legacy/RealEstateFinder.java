@@ -37,7 +37,6 @@ public class RealEstateFinder {
         BelowAreaSpec belowAreaSpec = new BelowAreaSpec(maxBuildingArea);
         MaterialSpec materialSpec = new MaterialSpec(material);
         List<RealEstate> foundRealEstates = new ArrayList<>();
-
         Iterator<RealEstate> estates = repository.iterator();
         while (estates.hasNext()) {
             RealEstate estate = estates.next();
