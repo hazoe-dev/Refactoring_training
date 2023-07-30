@@ -50,18 +50,14 @@ public class RealEstateFinder {
     }
 
     public List<RealEstate> byPlacement(EstatePlacement placement){
-        Spec placementSpec = new PlacementSpec(placement);
+        Spec placementSpec = new PlacementSpec(placement, true);
         return bySpec(placementSpec);
     }
 
     public List<RealEstate> byAvoidingPlacement(EstatePlacement placement){
         List<RealEstate> foundRealEstates = new ArrayList<>();
-        Spec placementSpec = new PlacementSpec(placement);
-        for (RealEstate estate : repository) {
-            if (!placementSpec.check(estate))
-                foundRealEstates.add(estate);
-        }
-        return foundRealEstates;
+        Spec placementSpec = new PlacementSpec(placement, false);
+        return bySpec(placementSpec);
     }
 
     public List<RealEstate> byAreaRange(float minArea, float maxArea){
