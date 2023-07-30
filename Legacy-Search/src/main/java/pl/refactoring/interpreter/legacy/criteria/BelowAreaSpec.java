@@ -5,7 +5,7 @@ import pl.refactoring.interpreter.legacy.RealEstate;
 /**
  * @author tqvu
  */
-public class BelowAreaSpec implements Spec {
+public class BelowAreaSpec extends SpecDecorator {
     public float getMaxBuildingArea() {
         return maxBuildingArea;
     }
@@ -16,8 +16,13 @@ public class BelowAreaSpec implements Spec {
         this.maxBuildingArea = maxBuildingArea;
     }
 
+    public BelowAreaSpec(Spec spec, float maxBuildingArea) {
+        super(spec);
+        this.maxBuildingArea = maxBuildingArea;
+    }
+
     @Override
     public boolean check(RealEstate estate) {
-        return estate.getBuildingArea() < maxBuildingArea;
+        return super.check(estate) && estate.getBuildingArea() < maxBuildingArea;
     }
 }

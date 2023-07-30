@@ -3,11 +3,17 @@ package pl.refactoring.interpreter.legacy.criteria;
 import pl.refactoring.interpreter.legacy.RealEstate;
 import pl.refactoring.interpreter.legacy.field.EstatePlacement;
 
-public class PlacementSpec implements Spec {
+public class PlacementSpec extends SpecDecorator {
     private EstatePlacement placement;
     private boolean isEqual;
 
     public PlacementSpec(EstatePlacement placement, boolean isEqual) {
+        this.placement = placement;
+        this.isEqual = isEqual;
+    }
+
+    public PlacementSpec( Spec spec,EstatePlacement placement, boolean isEqual) {
+        super(spec);
         this.placement = placement;
         this.isEqual = isEqual;
     }
@@ -17,6 +23,6 @@ public class PlacementSpec implements Spec {
     }
 
     public boolean check(RealEstate estate) {
-        return isEqual ? checkEqual(estate) : !checkEqual(estate);
+        return super.check(estate) && isEqual ? checkEqual(estate) : !checkEqual(estate);
     }
 }

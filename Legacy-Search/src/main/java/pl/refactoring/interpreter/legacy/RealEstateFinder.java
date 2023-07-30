@@ -30,11 +30,6 @@ public class RealEstateFinder {
                 .filter(spec::check)
                 .collect(Collectors.toList());
     }
-    private List<RealEstate> bySpec(Spec spec, List<RealEstate> estates) {
-        return estates.stream()
-                .filter(spec::check)
-                .collect(Collectors.toList());
-    }
 
     public List<RealEstate> byMaterial(EstateMaterial material){
         Spec materialSpec = new MaterialSpec(material);
@@ -42,11 +37,8 @@ public class RealEstateFinder {
     }
 
     public List<RealEstate> byMaterialBelowArea(EstateMaterial material, float maxBuildingArea){
-        Spec belowAreaSpec = new BelowAreaSpec(maxBuildingArea);
-        Spec materialSpec = new MaterialSpec(material);
-        List<RealEstate> foundRealEstates;
-        foundRealEstates = bySpec(belowAreaSpec);
-        return bySpec(materialSpec, foundRealEstates);
+        Spec combineSpec = new BelowAreaSpec(new MaterialSpec(material), maxBuildingArea);
+        return bySpec(combineSpec);
     }
 
     public List<RealEstate> byPlacement(EstatePlacement placement){
@@ -55,37 +47,23 @@ public class RealEstateFinder {
     }
 
     public List<RealEstate> byAvoidingPlacement(EstatePlacement placement){
-        List<RealEstate> foundRealEstates = new ArrayList<>();
         Spec placementSpec = new PlacementSpec(placement, false);
         return bySpec(placementSpec);
     }
 
     public List<RealEstate> byAreaRange(float minArea, float maxArea){
-        List<RealEstate> foundRealEstates = new ArrayList<>();
-
-        for (RealEstate estate : repository) {
-            if (estate.getBuildingArea() >= minArea && estate.getBuildingArea() <= maxArea)
-                foundRealEstates.add(estate);
-        }
-        return foundRealEstates;
+        return repository.stream()
+                .filter(estate -> estate.getBuildingArea() >= minArea && estate.getBuildingArea() <= maxArea)
+                .collect(Collectors.toList());
     }
 
     public List<RealEstate> byType(EstateType type){
-        List<RealEstate> foundRealEstates = new ArrayList<>();
         Spec typeSpec = new EstateTypeSpec(type);
         return bySpec(typeSpec);
     }
 
     public List<RealEstate> byVerySpecificCriteria(EstateType type, EstatePlacement placement, EstateMaterial material){
-        List<RealEstate> foundRealEstates;
-        Spec materialSpec = new MaterialSpec(material);
-        Spec placementSpec = new PlacementSpec(placement, true);
-        Spec typeSpec = new EstateTypeSpec(type);
-
-        foundRealEstates = bySpec(materialSpec);
-        foundRealEstates = bySpec(typeSpec, foundRealEstates);
-        foundRealEstates = bySpec(placementSpec,foundRealEstates);
-
-        return foundRealEstates;
+        Spec combineSpec = new MaterialSpec(new PlacementSpec(new EstateTypeSpec(type),placement, true),material);
+        return bySpec(combineSpec);
     }
 }
