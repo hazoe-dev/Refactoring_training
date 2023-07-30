@@ -1,12 +1,9 @@
 package pl.refactoring.interpreter.legacy;
 
-import pl.refactoring.interpreter.legacy.criteria.PlacementSpec;
+import pl.refactoring.interpreter.legacy.criteria.*;
 import pl.refactoring.interpreter.legacy.field.EstateMaterial;
 import pl.refactoring.interpreter.legacy.field.EstatePlacement;
 import pl.refactoring.interpreter.legacy.field.EstateType;
-import pl.refactoring.interpreter.legacy.criteria.BelowAreaSpec;
-import pl.refactoring.interpreter.legacy.criteria.MaterialSpec;
-import pl.refactoring.interpreter.legacy.criteria.Spec;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -88,7 +85,8 @@ public class RealEstateFinder {
         List<RealEstate> foundRealEstates = new ArrayList<>();
 
         for (RealEstate estate : repository) {
-            if (checkEstateType(type, estate))
+            EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
+            if (typeSpec.checkEstateType())
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
@@ -100,15 +98,10 @@ public class RealEstateFinder {
 
         for (RealEstate estate : repository) {
             PlacementSpec placementSpec = new PlacementSpec(placement, estate);
-            if (checkEstateType(type, estate) && placementSpec.check() && materialSpec.check(estate))
+            EstateTypeSpec typeSpec = new EstateTypeSpec(type, estate);
+            if (typeSpec.checkEstateType() && placementSpec.check() && materialSpec.check(estate))
                 foundRealEstates.add(estate);
         }
         return foundRealEstates;
-    }
-
-
-
-    private boolean checkEstateType(EstateType type, RealEstate estate) {
-        return estate.getType().equals(type);
     }
 }
